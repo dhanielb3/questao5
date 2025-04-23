@@ -58,6 +58,7 @@ export default function Home() {
 		backtrack([]);
 		return resultados;
 	}
+	
 	useEffect(() => {
 		const cores = ["azul", "vermelho", "roxo"];
 		const combinacoes = gerarFormacoes(x);
