@@ -26,9 +26,9 @@ function paraTailwind(cor: string) {
 }
 
 function gerarPiramide(base: string[]): string[][] {
-	let piramide: string[][] = [base];
+	const piramide: string[][] = [base];
 	while (piramide[0].length > 1) {
-		let novaLinha: string[] = [];
+		const novaLinha: string[] = [];
 		for (let i = 0; i < piramide[0].length - 1; i++) {
 			novaLinha.push(retornarCor(piramide[0][i], piramide[0][i + 1]));
 		}
