@@ -3,62 +3,61 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-function retornarCor(primeira: string, segunda: string) {
-	if (primeira === segunda) return primeira;
-	return (
-		["azul", "vermelho", "roxo"].filter(
-			(c) => c !== primeira && c !== segunda
-		)[0] || "null"
-	);
-}
-
-function paraTailwind(cor: string) {
-	switch (cor) {
-		case "azul":
-			return "bg-blue-500";
-		case "vermelho":
-			return "bg-red-500";
-		case "roxo":
-			return "bg-fuchsia-500";
-		default:
-			return "bg-gray-500";
-	}
-}
-
-function gerarPiramide(base: string[]): string[][] {
-	const piramide: string[][] = [base];
-	while (piramide[0].length > 1) {
-		const novaLinha: string[] = [];
-		for (let i = 0; i < piramide[0].length - 1; i++) {
-			novaLinha.push(retornarCor(piramide[0][i], piramide[0][i + 1]));
-		}
-		piramide.unshift(novaLinha);
-	}
-	return piramide;
-}
-
-function gerarFormacoes(x: number): number[][] {
-	const resultados: number[][] = [];
-	function backtrack(atual: number[]) {
-		if (atual.length === x) {
-			resultados.push([...atual]);
-			return;
-		}
-		for (let i = 0; i <= 2; i++) {
-			atual.push(i);
-			backtrack(atual);
-			atual.pop();
-		}
-	}
-	backtrack([]);
-	return resultados;
-}
-
 export default function Home() {
 	const [data, setData] = useState<{ [id: string]: number }>({});
 	const [x, setX] = useState(1); // Alterar este valor para mudar o tamanho da base da pirâmide
-  const [k, setK] = useState(4);
+	const [k, setK] = useState(4);
 
+	function retornarCor(primeira: string, segunda: string) {
+		if (primeira === segunda) return primeira;
+		return (
+			["azul", "vermelho", "roxo"].filter(
+				(c) => c !== primeira && c !== segunda
+			)[0] || "null"
+		);
+	}
+
+	function paraTailwind(cor: string) {
+		switch (cor) {
+			case "azul":
+				return "bg-blue-500";
+			case "vermelho":
+				return "bg-red-500";
+			case "roxo":
+				return "bg-fuchsia-500";
+			default:
+				return "bg-gray-500";
+		}
+	}
+
+	function gerarPiramide(base: string[]): string[][] {
+		const piramide: string[][] = [base];
+		while (piramide[0].length > 1) {
+			const novaLinha: string[] = [];
+			for (let i = 0; i < piramide[0].length - 1; i++) {
+				novaLinha.push(retornarCor(piramide[0][i], piramide[0][i + 1]));
+			}
+			piramide.unshift(novaLinha);
+		}
+		return piramide;
+	}
+
+	function gerarFormacoes(x: number): number[][] {
+		const resultados: number[][] = [];
+		function backtrack(atual: number[]) {
+			if (atual.length === x) {
+				resultados.push([...atual]);
+				return;
+			}
+			for (let i = 0; i <= 2; i++) {
+				atual.push(i);
+				backtrack(atual);
+				atual.pop();
+			}
+		}
+		backtrack([]);
+		return resultados;
+	}
 	useEffect(() => {
 		const cores = ["azul", "vermelho", "roxo"];
 		const combinacoes = gerarFormacoes(x);
@@ -108,7 +107,7 @@ export default function Home() {
 				<div className="flex gap-4 items-center flex-col sm:flex-row">
 					<button
 						className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            onClick={()=>setX(k)}
+						onClick={() => setX(k)}
 					>
 						<Image
 							className="dark:invert"
@@ -119,7 +118,11 @@ export default function Home() {
 						/>
 						Gerar
 					</button>
-          <input className="px-8 py-2 border rounded-lg" value={k} onChange={(e) => setK(Number(e.target.value))}></input>
+					<input
+						className="px-8 py-2 border rounded-lg"
+						value={k}
+						onChange={(e) => setK(Number(e.target.value))}
+					></input>
 				</div>
 				<div className="w-[80vw] h-[50vh] bg-gray-900 border border-gray-800 overflow-y-auto">
 					<ul className="flex flex-wrap">
