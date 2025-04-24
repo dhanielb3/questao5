@@ -67,9 +67,7 @@ export default function Home() {
 		combinacoes.forEach((item) => {
 			const base = item.map((i) => cores[i]);
 			const piramide = gerarPiramide(base);
-			const key = `${piramide[piramide.length - 1][0]} + ${
-				piramide[piramide.length - 1][piramide[piramide.length - 1].length - 1]
-			} = ${piramide[0][0]}`;
+			const key = `${piramide[piramide.length - 1][0]} + ${piramide[piramide.length - 1][piramide[piramide.length - 1].length - 1]} = ${piramide[0][0]}`;
 
 			novaData[key] = (novaData[key] || 0) + 1;
 		});
